@@ -8,6 +8,7 @@ import {
   LogIn, Footprints, Compass, MountainSnow, ShieldCheck, Crown, 
   HeartPulse, Briefcase, GraduationCap, Ticket, 
   Landmark, Trophy, ChevronLeft, ChevronRight,
+  Instagram,
 } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
 
@@ -68,7 +69,6 @@ export default function Home() {
                </div>
 
                <div className="hidden sm:flex flex-col leading-tight ml-2">
-                 <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest group-hover:text-blue-600 transition-colors">CMRIT Chapter</span>
                  <span className="text-sm md:text-lg font-bold text-zinc-900 tracking-tight">Hindustan Scouts & Guides Association</span>
                </div>
             </Link>
@@ -572,17 +572,17 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-zinc-900 tracking-tight uppercase">
-                  Hindustan Scouts & Guides
+                  Hindustan Scouts & Guides Association
                 </h3>
-                <p className="text-xs font-bold text-blue-600 tracking-widest uppercase">
-                  CMRIT Chapter • Rover & Ranger Unit
-                </p>
                 <div className="flex gap-4 mt-3">
                   <a href="mailto:hindustanscoutsandguides.cmrit@gmail.com" className="text-zinc-400 hover:text-blue-600 transition-colors">
                     <Mail size={18} />
                   </a>
                   <a href="tel:+919951040546" className="text-zinc-400 hover:text-blue-600 transition-colors">
                     <Phone size={18} />
+                  </a>
+                  <a href="https://www.instagram.com/hsga_cmrit?igsh=emc1M2E1b3cwYnR4" className="text-zinc-400 hover:text-blue-600 transition-colors">
+                    <Instagram size={18} />
                   </a>
                 </div>
               </div>
