@@ -9,6 +9,8 @@ interface Student {
   bloodGroup: string;
   healthIssues: boolean;
   healthDetails?: string;
+  fatherName: string;
+  motherName: string;
 }
 
 interface DirectoryProps {
@@ -36,6 +38,7 @@ export default function StudentDirectory({ students }: DirectoryProps) {
               <tr>
                 <th className="px-6 py-4">Identity</th>
                 <th className="px-6 py-4">Contact</th>
+                <th className="px-6 py-4">Parent Details</th>
                 <th className="px-6 py-4">Medical</th>
               </tr>
             </thead>
@@ -73,6 +76,20 @@ export default function StudentDirectory({ students }: DirectoryProps) {
                         <Phone className="w-3.5 h-3.5 text-indigo-400" />
                         {student.phone}
                       </a>
+                    </div>
+                  </td>
+
+                  {/* Parent Details */}
+                  <td className="px-6 py-4">
+                    <div className="flex flex-col gap-1.5">
+                      <span className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors">
+                        Father Name:-
+                        {(" ") + student.fatherName}
+                      </span>
+                      <span className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors">
+                        Mother Name:- 
+                        {(" ") + student.motherName}
+                      </span>
                     </div>
                   </td>
 

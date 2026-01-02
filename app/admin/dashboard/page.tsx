@@ -100,6 +100,8 @@ export default async function AdminDashboard() {
               phone: s.mobileNumber,
               bloodGroup: s.bloodGroup,
               healthIssues: s.healthIssues === "YES",
+              fatherName: s.fatherName,
+              motherName: s.motherName
             }))}
           />
         </section>
