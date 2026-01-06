@@ -180,8 +180,8 @@ export default function LoginPage() {
             </button>
 
           </form>
-
-          {/* Help Text */}
+{/* 
+          {Help Text}
           {loginType === 'student' && (
             <p className="text-center text-xs text-zinc-500">
               New to HSG? <Link href="/register" className="text-zinc-900 font-bold hover:underline">Create your account</Link>
@@ -191,7 +191,7 @@ export default function LoginPage() {
             <p className="text-center text-xs text-zinc-500">
               Need access? <Link href="#" className="text-zinc-900 font-bold hover:underline">Contact System Administrator</Link>
             </p>
-          )}
+          )} */}
 
         </div>
       </div>
