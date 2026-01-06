@@ -91,7 +91,7 @@ export default function RegisterPage() {
     }
 
     // success
-    router.push("/login");
+    router.push("/dashboard");
   };
 
   return (
