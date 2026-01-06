@@ -6,11 +6,13 @@ import { redirect } from "next/navigation";
 import AdminHeader from "@/components/admin-dashboard/AdminHeader";
 import StatsOverview from "@/components/admin-dashboard/StatsOverview";
 import AttendanceManager from "@/components/admin-dashboard/AttendanceManager";
-import StudentDirectory from "@/components/admin-dashboard/StudentDirectory";
+import StudentDirectory, { Student } from "@/components/admin-dashboard/StudentDirectory";
 import BloodDonorTable from "@/components/admin-dashboard/BloodDonorTable";
 
 import { LayoutGrid, Users, Droplets } from "lucide-react";
 import { getBloodDonors } from "@/actions/get-blood-donors"; 
+import { updateStudent } from "@/actions/updateStudent";
+import { deleteStudent } from "@/actions/deleteStudent";
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
@@ -38,6 +40,28 @@ export default async function AdminDashboard() {
   const absentToday = totalStudents - presentToday;
 
   const bloodDonors = await getBloodDonors();
+
+  async function handleUpdate(student: Student) {
+    "use server";
+    await updateStudent({
+      id: student.id,
+      fullName: student.name,
+      username: student.roll,
+      phone: student.phone,
+      fatherName: student.fatherName,
+      motherName: student.motherName,
+      presentAddress: "",
+      permanentAddress: "",
+      age: 0,
+      bloodGroup: student.bloodGroup,
+      healthIssues: student.healthIssues,
+    });
+  }
+
+  async function handleDelete(id: string) {
+    "use server";
+    await deleteStudent({ id });
+  }
   
   return (
     <div className="min-h-screen bg-slate-50 selection:bg-indigo-100">
@@ -101,8 +125,10 @@ export default async function AdminDashboard() {
               bloodGroup: s.bloodGroup,
               healthIssues: s.healthIssues === "YES",
               fatherName: s.fatherName,
-              motherName: s.motherName
+              motherName: s.motherName,
             }))}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
           />
         </section>
 
