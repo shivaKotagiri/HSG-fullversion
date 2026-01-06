@@ -7,8 +7,7 @@ import {
   Menu, X, Mail, Phone,
   LogIn, Footprints, Compass, MountainSnow, ShieldCheck, Crown, 
   HeartPulse, Briefcase, GraduationCap, Ticket, 
-  Landmark, Trophy, ChevronLeft, ChevronRight,
-  Instagram,
+  Landmark, Trophy, ChevronLeft, ChevronRight,Instagram
 } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
 
@@ -69,6 +68,7 @@ export default function Home() {
                </div>
 
                <div className="hidden sm:flex flex-col leading-tight ml-2">
+                 <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest group-hover:text-blue-600 transition-colors"></span>
                  <span className="text-sm md:text-lg font-bold text-zinc-900 tracking-tight">Hindustan Scouts & Guides Association</span>
                </div>
             </Link>
@@ -134,65 +134,77 @@ export default function Home() {
         </div>
       </div>
 {/* hero section */}
-      <section className="relative w-full bg-black group">
-
-        <div className="relative w-full h-62.5 sm:h-100 md:h-137.5 lg:h-162.5 overflow-hidden">
+<section className="relative w-full bg-black group">
+  {/* 
+      CONTAINER LOGIC:
+      - aspect-[16/9] on mobile (Standard video shape)
+      - md:aspect-[21/9] on tablet (Wider)
+      - lg:aspect-[3/1] on desktop (Ultrawide banner)
+      This ensures the "box" the image sits in is shaped like your banners.
+  */}
+  <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1] overflow-hidden bg-black">
+    
+    <div
+      className="flex h-full w-full transition-transform duration-500 ease-out"
+      style={{ transform: `translateX(-${heroIndex * 100}%)` }}
+    >
+      {heroImages.map((src, i) => (
+        <div key={i} className="relative min-w-full h-full flex items-center justify-center">
+          <Image
+            src={src}
+            alt={`Banner ${i + 1}`}
+            fill
+            /* 
+               IMPORTANT: 'object-contain' guarantees 0% of your image is cut.
+               It will fit the entire image inside the box. 
+               The 'bg-black' on the parent handles any small gaps.
+            */
+            className="object-contain"
+            sizes="100vw"
+            priority={i === 0}
+            quality={100}
+          />
           
-          <div
-            className="flex h-full w-full transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${heroIndex * 100}%)` }}
-          >
-            {heroImages.map((src, i) => (
-              <div key={i} className="relative min-w-full h-full">
-                <Image
-                  src={src}
-                  alt={`Banner ${i + 1}`}
-                  fill
-                  className="object-contain object-center"
-                  sizes="100vw"
-                  priority={i === 0}
-                  quality={90}
-                />
-                {/* Subtle gradient to ensure white navigation arrows are always visible */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-              </div>
-            ))}
-          </div>
-
-          {/* Navigation Arrows - Smaller & Subtle on Mobile */}
-          <button
-            className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 md:p-3 rounded-full bg-black/20 text-white backdrop-blur-sm hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
-            onClick={() => setHeroIndex((i) => (i - 1 + heroImages.length) % heroImages.length)}
-            aria-label="Previous Slide"
-          >
-            <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
-          </button>
-
-          <button
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 md:p-3 rounded-full bg-black/20 text-white backdrop-blur-sm hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
-            onClick={() => setHeroIndex((i) => (i + 1) % heroImages.length)}
-            aria-label="Next Slide"
-          >
-            <ChevronRight className="w-5 h-5 md:w-8 md:h-8" />
-          </button>
-
-          {/* Pagination Dots */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2 z-10">
-            {heroImages.map((_, i) => (
-              <button
-                key={i}
-                className={`h-1 md:h-1.5 rounded-full transition-all duration-300 ${
-                  heroIndex === i 
-                    ? "w-4 md:w-8 bg-white" 
-                    : "w-1 md:w-1.5 bg-white/50 hover:bg-white/80"
-                }`}
-                onClick={() => setHeroIndex(i)}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
+          {/* Subtle gradient overlay - only at the bottom to protect the dots */}
+          <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
         </div>
-      </section>
+      ))}
+    </div>
+
+    {/* Navigation Arrows - Using larger touch targets for mobile responsiveness */}
+    <button
+      className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2 md:p-4 rounded-full bg-black/10 text-white backdrop-blur-sm hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+      onClick={() => setHeroIndex((i) => (i - 1 + heroImages.length) % heroImages.length)}
+      aria-label="Previous"
+    >
+      <ChevronLeft className="w-6 h-6 md:w-10 md:h-10" />
+    </button>
+
+    <button
+      className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2 md:p-4 rounded-full bg-black/10 text-white backdrop-blur-sm hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+      onClick={() => setHeroIndex((i) => (i + 1) % heroImages.length)}
+      aria-label="Next"
+    >
+      <ChevronRight className="w-6 h-6 md:w-10 md:h-10" />
+    </button>
+
+    {/* Pagination Dots - Moved higher for better mobile clearance */}
+    <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3 z-30">
+      {heroImages.map((_, i) => (
+        <button
+          key={i}
+          className={`h-1.5 md:h-2 rounded-full transition-all duration-300 ${
+            heroIndex === i 
+              ? "w-8 md:w-12 bg-white shadow-lg" 
+              : "w-2 md:w-3 bg-white/30 hover:bg-white/60"
+          }`}
+          onClick={() => setHeroIndex(i)}
+          aria-label={`Slide ${i + 1}`}
+        />
+      ))}
+    </div>
+  </div>
+</section>
 
       <section id="history" className="w-full py-20 bg-zinc-50 border-b border-zinc-200 relative">
         <div className="w-full px-6 md:px-12 lg:px-16">
@@ -414,225 +426,107 @@ export default function Home() {
           </div>
         </div>
       </section>
+{/* --- Blood Donor Section (Normal Look) --- */}
+      <section id="blood-donor" className="py-24 bg-white border-y border-zinc-100">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          {/* Icon in a soft rounded container */}
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-50 text-red-600 mb-8">
+            <HeartPulse size={32} />
+          </div>
 
-      <section id="blood-donor" className="relative py-16 bg-linear-to-br from-red-600 via-red-700 to-red-900 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-           <svg className="h-full w-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
-             <path fill="none" stroke="currentColor" strokeWidth="2" d="M0,160L48,160L80,64L112,256L144,160L192,160L240,160L272,64L304,256L336,160L1440,160" />
-           </svg>
-        </div>
-        
-        <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/30 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-950/40 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
-
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+          {/* Clean, standard typography */}
+          <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight">
+            Emergency Blood Network
+          </h2>
           
-          <div className="flex flex-col lg:flex-row items-center justify-end">
-            <div className="lg:w-1/2 w-full">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/40 border border-red-500/50 text-red-100 text-xs md:text-sm font-semibold tracking-wide mb-6 backdrop-blur-sm">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                  </span>
-                  Emergency Response Network
-               </div>
+          <p className="mt-6 text-zinc-600 text-lg leading-relaxed">
+            Join the CMRIT HSG Blood Donor wing. We maintain a real-time database to bridge the gap between donors and those in critical need within our community.
+          </p>
 
-              <h2 className="text-3xl md:text-4xl font-serif font-bold tracking-tight mb-4 leading-tight">
-                Your Blood Can Be Someone&apos;s <span className="text-red-200 border-b-4 border-red-500/50">Second Chance</span>
-              </h2>
-               
-              <p className="text-base md:text-lg text-red-100 mb-8 leading-relaxed font-light">
-                The CMRIT HSG Blood Donor wing bridges the gap between donors and those in critical need. We maintain a real-time database of student volunteers ready to respond to emergencies in Hyderabad.
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                 <Link 
-                    href="/blood-donor" 
-                    className="flex items-center gap-2 bg-white text-red-700 px-6 py-3 rounded-full font-bold tracking-wide shadow-lg shadow-red-900/20 hover:bg-red-50 hover:scale-105 transition-all"
-                  >
-                    <HeartPulse size={18} />
-                    Register as Donor
-                  </Link>
-              </div>
-            </div>
-
+          {/* Standard professional button */}
+          <div className="mt-10">
+            <Link 
+              href="/blood-donor" 
+              className="inline-flex items-center justify-center bg-red-600 text-white px-8 py-4 rounded-md font-bold text-sm uppercase tracking-wider hover:bg-red-700 transition-all shadow-lg shadow-red-600/10"
+            >
+              Register as a Donor
+            </Link>
           </div>
         </div>
       </section>
-      <section id="benefits" className="py-20 bg-zinc-50"> {/* Light gray background makes white cards pop */}
-  <div className="mx-auto max-w-7xl px-6 lg:px-8">
-    
-    {/* Section Header */}
-    <div className="mb-14 text-center">
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-bold uppercase tracking-widest mb-4">
-        <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-        Membership Benefits
-      </div>
-      <h2 className="text-3xl md:text-5xl font-black text-zinc-900 tracking-tight">
-        Why Join the HSGA Wing?
-      </h2>
-      <p className="mt-4 text-zinc-500 max-w-2xl mx-auto font-medium">
-        Gain exclusive access to career opportunities, national recognition, and personal development through our established network.
-      </p>
-    </div>
-
-    {/* Benefits Grid */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-      {[
-        {
-          title: "Government Jobs",
-          tag: "Scout Quota",
-          desc: "Access reserved opportunities across Railways and Central sectors.",
-          icon: <Briefcase className="w-6 h-6" />,
-          color: "blue"
-        },
-        {
-          title: "Higher Education",
-          tag: "Admissions",
-          desc: "Leverage recognition to strengthen applications and placements.",
-          icon: <GraduationCap className="w-6 h-6" />,
-          color: "indigo"
-        },
-        {
-          title: "Travel Perks",
-          tag: "Concessions",
-          desc: "Reduced fares for official activities and recognized service.",
-          icon: <Ticket className="w-6 h-6" />,
-          color: "emerald"
-        },
-        {
-          title: "Medals of Honor",
-          tag: "Recognition",
-          desc: "Eligibility for high honors from state and national leadership.",
-          icon: <Trophy className="w-6 h-6" />,
-          color: "amber"
-        },
-        {
-          title: "National Exposure",
-          tag: "Leadership",
-          desc: "Participate in national programs and connect with decision makers.",
-          icon: <Landmark className="w-6 h-6" />,
-          color: "purple"
-        },
-      ].map((benefit, idx) => (
-        <div 
-          key={idx}
-          className="group relative flex flex-col bg-white p-8 rounded-2xl border border-zinc-200 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-blue-500/50"
-        >
-          {/* Subtle Top Accent Line - Appears on Hover */}
-          <div className="absolute inset-x-0 top-0 h-1 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full rounded-t-2xl" />
-
-          {/* Icon Container */}
-          <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-50 text-zinc-600 border border-zinc-100 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-200">
-            {benefit.icon}
+           {/* --- Benefits Section (CLEAN LOOK) --- */}
+      <section id="benefits" className="py-24 bg-white">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mb-14 text-center">
+            <span className="text-blue-600 text-xs font-black uppercase tracking-[0.3em]">Advantages</span>
+            <h2 className="text-3xl md:text-5xl font-black text-zinc-900 tracking-tighter uppercase italic mt-4">Membership Benefits</h2>
           </div>
 
-          {/* Content */}
-          <div className="flex-grow">
-            <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-1 block">
-              {benefit.tag}
-            </span>
-            <h3 className="text-lg font-bold text-zinc-900 mb-3 tracking-tight">
-              {benefit.title}
-            </h3>
-            <p className="text-sm leading-relaxed text-zinc-500 font-medium">
-              {benefit.desc}
-            </p>
-          </div>
-
-          {/* Bottom Visual Cue */}
-          <div className="mt-8 pt-4 border-t border-zinc-50 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase group-hover:text-blue-600 transition-colors">
-              HSGA Exclusive
-            </span>
-            <div className="w-6 h-6 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
-               <ChevronRight size={14} />
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {[
+              { title: "Govt Jobs", tag: "Quota", desc: "Access reserved seats in Railways and Central sectors.", icon: <Briefcase /> },
+              { title: "Education", tag: "Admissions", desc: "Leverage certificates for higher education weightage.", icon: <GraduationCap /> },
+              { title: "Travel", tag: "Concession", desc: "Reduced fares for official scouting service travel.", icon: <Ticket /> },
+              { title: "Recognition", tag: "Medals", desc: "State and National level honors for top achievers.", icon: <Trophy /> },
+              { title: "Leadership", tag: "Exposure", desc: "Connect with national leaders and decision makers.", icon: <Landmark /> },
+            ].map((benefit, idx) => (
+              <div key={idx} className="group flex flex-col bg-zinc-50 p-8 border border-zinc-100 transition-all duration-300 hover:bg-white hover:shadow-2xl hover:border-blue-500/20">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center bg-white text-zinc-400 border border-zinc-100 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                  {benefit.icon}
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-1">{benefit.tag}</span>
+                <h3 className="text-lg font-black text-zinc-900 mb-3 uppercase tracking-tight">{benefit.title}</h3>
+                <p className="text-xs leading-relaxed text-zinc-500 font-medium">{benefit.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
-    {/* --- WHITE THEME COMPACT FOOTER --- */}
-      <footer className="bg-white border-t border-zinc-200 pt-12 pb-8 px-6">
+      </section>
+    {/* --- Footer --- */}
+      <footer className="bg-white border-t border-zinc-200 pt-20 pb-10 px-6">
         <div className="max-w-7xl mx-auto">
-          
-          <div className="flex flex-col md:flex-row justify-between items-start gap-8 pb-10">
-            
-            {/* Brand Section - Large Logo */}
-            <div className="flex flex-col gap-4 max-w-sm">
-              <div className="relative h-24 w-24 md:h-28 md:w-28">
-                <Image 
-                  src="https://res.cloudinary.com/dq2suftps/image/upload/v1722516854/logo_bivaq2.jpg" 
-                  alt="HSG Logo" 
-                  fill
-                  className="object-contain"
-                />
+          <div className="flex flex-col md:flex-row justify-between items-start gap-12 pb-16">
+            <div className="flex flex-col gap-6 max-w-sm">
+              <div className="relative h-20 w-20">
+                <Image src="https://res.cloudinary.com/dq2suftps/image/upload/v1722516854/logo_bivaq2.jpg" alt="HSG Logo" fill className="object-contain" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-zinc-900 tracking-tight uppercase">
-                  Hindustan Scouts & Guides Association
-                </h3>
-                <div className="flex gap-4 mt-3">
-                  <a href="mailto:hindustanscoutsandguides.cmrit@gmail.com" className="text-zinc-400 hover:text-blue-600 transition-colors">
-                    <Mail size={18} />
-                  </a>
-                  <a href="tel:+919951040546" className="text-zinc-400 hover:text-blue-600 transition-colors">
-                    <Phone size={18} />
-                  </a>
-                  <a href="https://www.instagram.com/hsga_cmrit?igsh=emc1M2E1b3cwYnR4" className="text-zinc-400 hover:text-blue-600 transition-colors">
-                    <Instagram size={18} />
-                  </a>
+                <h3 className="text-xl font-black text-zinc-900 uppercase tracking-tight">Hindustan Scouts & Guides Association</h3>
+                <p className="text-[10px] font-black text-blue-600 tracking-widest uppercase mt-1"> Rover & Ranger Unit</p>
+                <div className="flex gap-4 mt-6">
+                  <a href="mailto:hindustanscoutsandguides.cmrit@gmail.com" className="text-zinc-400 hover:text-blue-600 transition-colors"><Mail size={20} /></a>
+                  <a href="tel:+919951040546" className="text-zinc-400 hover:text-blue-600 transition-colors"><Phone size={20} /></a>
+                  <a href="https://www.instagram.com/hsga_cmrit/?igsh=emc1M2E1b3cwYnR4" target="_blank" className="text-zinc-400 hover:text-pink-600 transition-colors"><Instagram size={20} /></a>
                 </div>
               </div>
             </div>
-
-            {/* Navigation Links - Tightened spacing */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-6">
-              <div className="flex flex-col gap-3">
-                <p className="text-[10px] font-black text-zinc-900 uppercase tracking-widest">Main</p>
-                <nav className="flex flex-col gap-2 text-sm text-zinc-500 font-medium">
-                  {NAV_LINKS.slice(0, 4).map(link => (
-                    <Link key={link.name} href={link.href} className="hover:text-blue-600 transition-colors">{link.name}</Link>
-                  ))}
-                </nav>
-              </div>
-              <div className="flex flex-col gap-3">
-                <p className="text-[10px] font-black text-zinc-900 uppercase tracking-widest">More</p>
-                <nav className="flex flex-col gap-2 text-sm text-zinc-500 font-medium">
-                  {NAV_LINKS.slice(4).map(link => (
-                    <Link key={link.name} href={link.href} className="hover:text-blue-600 transition-colors">{link.name}</Link>
-                  ))}
-                </nav>
-              </div>
-              <div className="flex flex-col gap-3 col-span-2 sm:col-span-1">
-                <p className="text-[10px] font-black text-zinc-900 uppercase tracking-widest">Access</p>
-                <nav className="flex flex-col gap-2 text-sm">
-                  <Link href="/login" className="font-bold text-zinc-900 hover:text-blue-600 transition-colors">Portal Login</Link>
-                  <Link href="/register" className="font-bold text-red-600 hover:text-red-700 transition-colors">Join Now</Link>
-                </nav>
-              </div>
-            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
+          <div className="flex flex-col gap-4">
+            <p className="text-[10px] font-black text-zinc-900 uppercase tracking-widest">Main</p>
+            <nav className="flex flex-col gap-2 text-sm text-zinc-500 font-bold uppercase tracking-tighter">
+              {NAV_LINKS.slice(0, 4).map(l => <Link key={l.name} href={l.href}>{l.name}</Link>)}
+            </nav>
           </div>
-
-          {/* Bottom Bar: Copyright & Redlix Credit */}
-          <div className="pt-6 border-t border-zinc-100 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-[11px] text-zinc-400 font-medium">
-              © {new Date().getFullYear()} HSG Association, CMRIT. All Rights Reserved.
-            </p>
-
-            {/* --- REDLIX CREDIT --- */}
-            <div className="flex items-center gap-1.5 text-[11px] text-zinc-500">
-              <span>Designed & Developed by</span>
-              <span className="font-bold text-zinc-900 px-2 py-0.5 bg-zinc-50 rounded border border-zinc-100">
-                Redlix development team
-              </span>
-            </div>
+          <div className="flex flex-col gap-4">
+            <p className="text-[10px] font-black text-zinc-900 uppercase tracking-widest">More</p>
+            <nav className="flex flex-col gap-2 text-sm text-zinc-500 font-bold uppercase tracking-tighter">
+              {NAV_LINKS.slice(4).map(l => <Link key={l.name} href={l.href}>{l.name}</Link>)}
+            </nav>
           </div>
-
+          <div className="flex flex-col gap-4">
+            <p className="text-[10px] font-black text-zinc-900 uppercase tracking-widest">Access</p>
+            <Link href="/login" className="text-sm font-black text-blue-600 uppercase">Portal Login</Link>
+          </div>
         </div>
-      </footer>
+      </div>
+
+      <div className="pt-8 border-t border-zinc-100 text-center">
+        <p className="text-[10px] text-zinc-400 font-black uppercase tracking-[0.2em]">
+          © {new Date().getFullYear()} Hindustan Scouts & Guides Association, CMRIT Hyderabad. All Rights Reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </div>
   );
