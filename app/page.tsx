@@ -7,7 +7,8 @@ import {
   Menu, X, Mail, Phone,
   LogIn, Footprints, Compass, MountainSnow, ShieldCheck, Crown, 
   HeartPulse, Briefcase, GraduationCap, Ticket, 
-  Landmark, Trophy, ChevronLeft, ChevronRight,Instagram
+  Landmark, Trophy, ChevronLeft, ChevronRight, Instagram,
+  AlertTriangle, CheckCircle
 } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
 
@@ -24,6 +25,11 @@ const NAV_LINKS = [
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
+  // Emergency contact information from the webpage
+  const emergencyPhone1 = "+91 9010635122";
+  const emergencyPhone2 = "+91 9951040546"; // Using same number, can be updated if second number is available
+  const emergencyEmail = "hindustanscoutsandguides.cmrit@gmail.com";
   const heroImages = [
     "https://i.ibb.co/s9yvNfxg/CMR-INSTITUTE-OF-TECHNOLOGY.png",
     "https://i.ibb.co/mFzQQ6B4/CMR-INSTITUTE-OF-TECHNOLOGY.png",
@@ -443,14 +449,21 @@ export default function Home() {
             Join the CMRIT HSG Blood Donor wing. We maintain a real-time database to bridge the gap between donors and those in critical need within our community.
           </p>
 
-          {/* Standard professional button */}
-          <div className="mt-10">
+          {/* Standard professional buttons */}
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href="/blood-donor" 
               className="inline-flex items-center justify-center bg-red-600 text-white px-8 py-4 rounded-md font-bold text-sm uppercase tracking-wider hover:bg-red-700 transition-all shadow-lg shadow-red-600/10"
             >
               Register as a Donor
             </Link>
+            <button
+              onClick={() => setIsEmergencyModalOpen(true)}
+              className="inline-flex items-center justify-center gap-2 bg-white border-2 border-red-600 text-red-600 px-8 py-4 rounded-md font-bold text-sm uppercase tracking-wider hover:bg-red-50 transition-all shadow-md"
+            >
+              <AlertTriangle size={18} />
+              Emergency Contact
+            </button>
           </div>
         </div>
       </section>
@@ -528,6 +541,88 @@ export default function Home() {
     </div>
   </footer>
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      
+      {/* Emergency Contact Modal */}
+      {isEmergencyModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+            onClick={() => setIsEmergencyModalOpen(false)}
+          />
+          
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all animate-in fade-in zoom-in-95 duration-200">
+            
+            {/* Header */}
+            <div className="bg-red-600 px-6 py-4 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-white" />
+                Emergency Contact
+              </h2>
+              <button 
+                onClick={() => setIsEmergencyModalOpen(false)}
+                className="text-white/80 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-6">
+              <p className="text-zinc-600 text-sm">
+                Contact us immediately for emergency blood donation requests. Use the contact information below.
+              </p>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg border border-red-100">
+                  <div className="p-2 bg-red-100 text-red-600 rounded-full shrink-0">
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-zinc-500 uppercase mb-1">Emergency Phone Number 1</p>
+                    <a href={`tel:${emergencyPhone1.replace(/\s/g, '')}`} className="text-zinc-900 font-bold text-base hover:text-red-600 transition-colors">
+                      {emergencyPhone1}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg border border-red-100">
+                  <div className="p-2 bg-red-100 text-red-600 rounded-full shrink-0">
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-zinc-500 uppercase mb-1">Emergency Phone Number 2</p>
+                    <a href={`tel:${emergencyPhone2.replace(/\s/g, '')}`} className="text-zinc-900 font-bold text-base hover:text-red-600 transition-colors">
+                      {emergencyPhone2}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg border border-red-100">
+                  <div className="p-2 bg-red-100 text-red-600 rounded-full shrink-0">
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-zinc-500 uppercase mb-1">Emergency Email Address</p>
+                    <a href={`mailto:${emergencyEmail}`} className="text-zinc-900 font-bold text-sm hover:text-red-600 transition-colors break-all">
+                      {emergencyEmail}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsEmergencyModalOpen(false)}
+                  className="w-full rounded-lg bg-red-600 text-white py-2.5 font-semibold text-sm hover:bg-red-700 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
