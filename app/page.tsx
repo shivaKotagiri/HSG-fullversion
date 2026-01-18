@@ -32,7 +32,7 @@ export default function Home() {
   const emergencyEmail = "hindustanscoutsandguides.cmrit@gmail.com";
   const heroImages = [
     "https://i.ibb.co/s9yvNfxg/CMR-INSTITUTE-OF-TECHNOLOGY.png",
-    "https://i.ibb.co/mFzQQ6B4/CMR-INSTITUTE-OF-TECHNOLOGY.png",
+    "https://i.ibb.co/Tx8my2xm/Dr-B-Satyanarayana-PRINCIPAL-OF-CMRIT.png",
     "https://i.ibb.co/1DFyvTX/CMR-INSTITUTE-OF-TECHNOLOGY-1.png",
   ];
   const [heroIndex, setHeroIndex] = useState(0);
