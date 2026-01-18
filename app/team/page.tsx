@@ -26,7 +26,9 @@ const BATCH_2024_2025 = {
     { name: "Sritha Nallamala", id: "24-009", image: "https://i.ibb.co/Y7Vtrg07/Sritha-Nallamala.png" },
     { name: "Sai Sree Mallempati", id: "24-010", image: "https://i.ibb.co/XfN8H1tf/Sai-Sree-Mallempati.jpg" },
     { name: "Pranavi", id: "24-011", image: "https://i.ibb.co/ZRvmBqG5/Pranavi.jpg" },
-    { name: "Kalyan", id: "24-012", image: "https://i.ibb.co/YFDDdd3K/Kalyan.jpg" }
+    { name: "Kalyan Nayak", id: "24-012", image: "https://i.ibb.co/MwPWK4X/kalyan.jpg" },
+      { name: "Vishwas", id: "24-012", image: "https://i.ibb.co/5WcBTBnP/Vishwas.png" },
+    
   ]
 };
 
@@ -34,7 +36,7 @@ const BATCH_2022_2023 = {
   coordinators: [
     { name: "Sri Bhavith Bodike", id: "22-001", image: "https://i.ibb.co/H6bCjD2/Sri-Bhavith-Bodike.jpg" },
     { name: "V. Uthej Reddy", id: "22-002", image: "https://i.ibb.co/vx4mMbzm/V-Uthej-Reddy.jpg" },
-    { name: "Thimmishetty Varshini", id: "22-003", image: "https://i.ibb.co/CpX5FH8G/Thimmishetty-Varshini.jpg" },
+    { name: "Thimmishetty Varshini", id: "22-003", image: "https://i.ibb.co/jZBsPY4M/Varshini.jpg" },
   ],
   volunteers: [
     { name: "Janavi", id: "22-004", image: "https://i.ibb.co/tppzpw9t/Janavi.jpg" },
@@ -55,6 +57,7 @@ const BATCH_2020_2021 = {
     { name: "B. Sai Siddhartha", id: "20-002", image: "https://i.ibb.co/ym08Xty2/B-Sai-Siddhartha.jpg" },
     { name: "Kartan Shiva Shenkar", id: "20-003", image: "https://i.ibb.co/G3cs169m/Kartan-Shiva-Shenkar.jpg" },
     { name: "Tarun Koduru", id: "20-004", image: "https://i.ibb.co/jkVsFtkG/Tarun-Koduru.jpg" },
+    { name: "M. Yeshaswinni", id: "20-004", image: "https://i.ibb.co/Csm93Bc7/M-Yeshaswini.jpg" },
   ],
   volunteers: [] // All members listed were coordinators
 };
