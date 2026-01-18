@@ -187,7 +187,7 @@ export default function RegisterPage() {
 
               <div className="grid grid-cols-2 gap-6">
                  <InputGroup 
-                  id="age" type="number" label="Age" icon={<Calendar size={18} />} 
+                  id="age" type="number" label="DOB" icon={<Calendar size={18} />} 
                   placeholder="18" value={formData.age} onChange={handleChange} 
                 />
                  <div className="group relative w-full">
